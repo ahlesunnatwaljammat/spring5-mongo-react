@@ -65,3 +65,9 @@ To import in a component
 1.  import {Weather} from './components/weather/WeatherDisplay'
 2.  import in curly braces because component is exporting with export instead of export default
     e.g. see WeatherDisplay class in components folder
+
+=====================================================
+To add material suport in react, install the following packages
+
+1.  npm install material-ui@next
+2.  npm install material-ui-icons
