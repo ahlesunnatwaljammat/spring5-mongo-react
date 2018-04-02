@@ -7,8 +7,32 @@ const PLACES = [
 ];
 
 class WeatherDisplay extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+          users: []
+        };
+
+        fetch('/api/users')
+            .then(result => result.json())
+            .then(json => {
+                console.log(json)
+                this.setState( {users: json} );
+            });
+    }
+
+
     render() {
-        return <h3>Hello {this.props.zipcode}</h3>
+        return <div>
+            <h3>Hello {this.props.zipcode}</h3>
+            <hr/>
+            {this.state.users.map((user,index) => (
+                <div key={index} style={{margin: '10px'}}>
+                    {user.userId}, {user.username}
+                </div>
+            ))}
+        </div>
     }
 }
 
