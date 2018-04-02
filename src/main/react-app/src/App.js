@@ -15,6 +15,7 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import ParentComponent from "./components/parentchild/ParentComponent";
 
 const styles = theme => ({
     root: {
@@ -44,22 +45,28 @@ const Header = () => (<h1>This is a header</h1>);
 class TwoWayBinding extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            value: ''
-        }
-
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange = (e) => {
-        console.log(e.target.value)
-        //this.state( { value: e.target.value });
+    componentWillMount() {
+        //The only place where you can assign this.state is the constructor.
+        this.state = {
+            value: ''
+        };
+    }
+
+    /**
+     * Error: _this2.SetState is not a function
+     * use this.setState instead of this.state, this.state is immutable so you can't modify it
+     */
+     handleChange = (e) => {
+        this.setState( {value: e.target.value} );
     };
 
     render() {
         return <div style={{margin: '10px'}}>
             <h2>Two way binding demo</h2>
-            <input type="text" onChange={this.handleChange}/>
+            <input type="text" value={this.state.value} onChange={this.handleChange}/>
             <div>
                 {this.state.value}
             </div>
@@ -70,6 +77,9 @@ class TwoWayBinding extends Component {
 class Home extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            open: false,
+        };
     }
 
     render() {
@@ -85,7 +95,7 @@ class Home extends Component {
                     <div style={{textAlign: 'right', width: '100%'}}>
                         <NavLink to="/"><Button color="inherit">Login</Button></NavLink>
                     </div>
-                    <IconButton aria-haspopup="true" color="inherit">
+                    <IconButton>
                         <AccountCircle />
                     </IconButton>
                     <Menu>
@@ -98,6 +108,7 @@ class Home extends Component {
                 <Grid item xs={12}>
                     <Paper className={styles.paper}>
                         <div style={divStyle}><Link to={"/twowaybinding"}>Two way binding</Link></div>
+                        <div style={divStyle}><Link to={"/parentChild"}>Parent Child</Link></div>
                         <div style={divStyle}><Link to={"/weather"}>Weather Component</Link></div>
                     </Paper>
                 </Grid>
@@ -114,6 +125,7 @@ const App = () => (
             <Route path="/header" component={Header}/>
             <Route path="/twowaybinding" component={TwoWayBinding}/>
             <Route path="/weather" component={Weather}/>
+            <Route path="/parentChild" component={ParentComponent}/>
         </div>
     </Router>
 );
