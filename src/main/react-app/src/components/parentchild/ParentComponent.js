@@ -15,8 +15,9 @@ class ParentComponent extends Component {
                                 Please enter color name: <input ref="txtColor"/>
                             </div>
                             <div style={{margin: '10px'}}>
-                                <ChildComponent ref={instance => { this.child = instance; }} />
-                                <button onClick={() => { this.child.getAlert(this.refs.txtColor.value); }}>Click</button>
+                                {/*<ChildComponent ref={instance => { this.child = instance; }} />*/}
+                                <ChildComponent ref="child" />
+                                <button onClick={() => { this.refs.child.getAlert(this.refs.txtColor.value); }}>Click</button>
                             </div>
                         </div>
                     </Paper>
