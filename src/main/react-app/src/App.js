@@ -16,6 +16,8 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import ParentComponent from "./components/parentchild/ParentComponent";
+import TodoList from './components/todoapp/TodoList'
+import LoadOnScroll from "./components/load_on_scroll/LoadOnScroll";
 
 const styles = theme => ({
     root: {
@@ -58,6 +60,8 @@ class TwoWayBinding extends Component {
     /**
      * Error: _this2.SetState is not a function
      * use this.setState instead of this.state, this.state is immutable so you can't modify it
+     * this.handleChange = this.handleChange.bind(this); if want to use without arrow function
+     * without binding event you have to create a arrow function
      */
      handleChange = (e) => {
         this.setState( {value: e.target.value} );
@@ -80,6 +84,7 @@ class Home extends Component {
         this.state = {
             open: false,
         };
+        console.log(props)
     }
 
     render() {
@@ -109,7 +114,11 @@ class Home extends Component {
                     <Paper className={styles.paper}>
                         <div style={divStyle}><Link to={"/twowaybinding"}>Two way binding</Link></div>
                         <div style={divStyle}><Link to={"/parentChild"}>Parent Child</Link></div>
-                        <div style={divStyle}><Link to={"/weather"}>Weather Component</Link></div>
+                        <div style={divStyle}><Link to={"/weather/"}>Weather Component</Link></div>
+                        <div style={divStyle}><Link to={"/about"}>About</Link></div>
+                        <div style={divStyle}><Link to={"/children"}>Children component</Link></div>
+                        <div style={divStyle}><Link to={"/todos"}>Todos</Link></div>
+                        <div style={divStyle}><Link to={"/loadonscroll"}>Data load on scroll</Link></div>
                     </Paper>
                 </Grid>
             </Grid>
@@ -124,8 +133,15 @@ const App = () => (
             {/*<Route exact path="/" component={Home}/>*/}
             <Route path="/header" component={Header}/>
             <Route path="/twowaybinding" component={TwoWayBinding}/>
-            <Route path="/weather" component={Weather}/>
+            {/*strict property will prevent routing util user navigate the same defined path*/}
+            <Route strict path="/weather/" component={Weather}/>
             <Route path="/parentChild" component={ParentComponent}/>
+            <Route path="/about" render={()=><h1>About</h1>}/>
+            {/*This route will append in each navigated component*/}
+            {/*<Route path="/children" children={()=>{return <h1>Children component About1</h1>}}/>*/}
+            <Route path="/children" children={({match})=>{return match && <h1>Children component About1</h1>}}/>
+            <Route path="/todos" component={TodoList}/>
+            <Route path="/loadonscroll" component={LoadOnScroll}/>
         </div>
     </Router>
 );
