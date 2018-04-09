@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import InfiniteScroll  from 'react-infinite-scroll-component';
+import {Grid, Paper} from "material-ui";
 
 const style = {
     display: 'flex',
@@ -46,14 +47,25 @@ class LoadOnScroll extends Component{
     render () {
         return (
             <div>
-                <h3>{heightMessage}</h3>
-                <InfiniteScroll
-                    next={this.generateDivs}
-                    hasMore={true}
-                    height={500}
-                    loader={<h4>Loading...</h4>}>
-                    {this.state.divs}
-                </InfiniteScroll>
+                <Grid container spacing={24} justify="center">
+                    <Grid item xs={4} >
+                        <Paper>
+                            <div style={ {width: '100%', display: 'flex', justifyContent: 'center'} }>
+                                <h3>{heightMessage}</h3>
+                            </div>
+                            <InfiniteScroll
+                                next={this.generateDivs}
+                                hasMore={true}
+                                height={500}
+                                loader={<h4>Loading...</h4>}>
+                                {this.state.divs}
+                            </InfiniteScroll>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Paper>Test</Paper>
+                    </Grid>
+                </Grid>
             </div>
         );
     }

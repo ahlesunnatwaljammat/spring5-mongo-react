@@ -71,3 +71,42 @@ To add material suport in react, install the following packages
 
 1.  npm install material-ui@next
 2.  npm install material-ui-icons
+
+=====================================================
+To add file upload in react, download the react-dropzone dependencies
+
+1. npm install --save react-dropzone
+
+Demo : class Basic extends React.Component {
+  constructor() {
+    super()
+    this.state = { files: [] }
+  }
+
+  onDrop(files) {
+    this.setState({
+      files
+    });
+  }
+
+  render() {
+    return (
+      <section>
+        <div className="dropzone">
+          <Dropzone onDrop={this.onDrop.bind(this)}>
+            <p>Try dropping some files here, or click to select files to upload.</p>
+          </Dropzone>
+        </div>
+        <aside>
+          <h2>Dropped files</h2>
+          <ul>
+            {
+              this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+            }
+          </ul>
+        </aside>
+      </section>
+    );
+  }
+}
+<Basic />

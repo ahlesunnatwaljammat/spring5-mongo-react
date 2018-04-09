@@ -5,7 +5,6 @@ import edu.learn.mongo.entities.Roles;
 import edu.learn.mongo.entities.User;
 import edu.learn.mongo.repos.RoleRepo;
 import edu.learn.mongo.repos.UserRepo;
-import edu.learn.mongo.rest.UserRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
-import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"edu.learn.mongo.rest"})
@@ -56,8 +54,13 @@ public class ReactiveMongoApplication {
             });
 
             logger.info("======================================");
-            logger.info("Find user by ur");
+            logger.info("Find user by ur and update its role from ADMIN to USERS");
             User user = userRepo.findByUsername("ur").block();
+            role = new Role();
+            role.setRole(Roles.USERS);
+            user.setRole(role);
+            userRepo.save(user).subscribe();
+
             logger.info(user.toString());
 
             logger.info("======================================");

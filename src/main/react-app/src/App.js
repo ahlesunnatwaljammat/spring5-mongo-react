@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom'
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+//import {HashRouter as Router, Route, Link, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom';
 import WeatherDisplay, {Weather} from './components/weather/WeatherDisplay'
 
 import PropTypes from 'prop-types';
@@ -8,16 +9,15 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import Menu, { MenuItem } from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import ParentComponent from "./components/parentchild/ParentComponent";
 import TodoList from './components/todoapp/TodoList'
 import LoadOnScroll from "./components/load_on_scroll/LoadOnScroll";
+import ParamDemo from "./components/param/ParamDemo";
+import NestedRouting from "./components/nested-routing/NestedRouter";
 
 const styles = theme => ({
     root: {
@@ -47,14 +47,14 @@ const Header = () => (<h1>This is a header</h1>);
 class TwoWayBinding extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            value: ''
+        };
+
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillMount() {
-        //The only place where you can assign this.state is the constructor.
-        this.state = {
-            value: ''
-        };
     }
 
     /**
@@ -97,16 +97,6 @@ class Home extends Component {
                     <Typography variant="title" color="inherit" className={styles.flex}>
                         Title
                     </Typography>
-                    <div style={{textAlign: 'right', width: '100%'}}>
-                        <NavLink to="/"><Button color="inherit">Login</Button></NavLink>
-                    </div>
-                    <IconButton>
-                        <AccountCircle />
-                    </IconButton>
-                    <Menu>
-                        <MenuItem>Profile</MenuItem>
-                        <MenuItem>My account</MenuItem>
-                    </Menu>
                 </Toolbar>
             </AppBar>
             <Grid container spacing={24}>
@@ -119,6 +109,8 @@ class Home extends Component {
                         <div style={divStyle}><Link to={"/children"}>Children component</Link></div>
                         <div style={divStyle}><Link to={"/todos"}>Todos</Link></div>
                         <div style={divStyle}><Link to={"/loadonscroll"}>Data load on scroll</Link></div>
+                        <div style={divStyle}><Link to={"/param/"+"nabbasi"}>Param Demo</Link></div>
+                        <div style={divStyle}><Link to={"/nestedRouter"}>Nested Routing</Link></div>
                     </Paper>
                 </Grid>
             </Grid>
@@ -142,6 +134,8 @@ const App = () => (
             <Route path="/children" children={({match})=>{return match && <h1>Children component About1</h1>}}/>
             <Route path="/todos" component={TodoList}/>
             <Route path="/loadonscroll" component={LoadOnScroll}/>
+            <Route path="/param/:username" component={ParamDemo}/>
+            <Route path="/nestedRouter" component={NestedRouting}/>
         </div>
     </Router>
 );

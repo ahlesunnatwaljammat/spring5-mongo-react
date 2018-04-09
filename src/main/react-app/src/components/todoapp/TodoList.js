@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom';
 import {Grid, Paper} from 'material-ui';
 
 class TodoList extends Component {
@@ -15,17 +16,31 @@ class TodoList extends Component {
     }
 
     render() {
-        return
-        <Grid container spacing={24}>
-            <Grid item xs={12}>
-                <div style={ {width: '100%', display: 'flex', justifyContent: 'center'} }>
-                    <div>
-                        <h3>Todo App</h3>
-                    </div>
-                </div>
+        return <div>
+            <Grid container spacing={24}>
+                <Grid item xs={8}>
+                    <Paper>
+                        <div style={ {width: '100%', display: 'flex', justifyContent: 'center'} }>
+                            <h3>Todo App</h3>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                    <Paper>
+                        <div style={ {width: '100%', display: 'flex', justifyContent: 'center'} }>
+                            <h3>Todo App</h3>
+                        </div>
+                    </Paper>
+                </Grid>
             </Grid>
-        </Grid>
+
+            <Router>
+                <div>
+                    <Route path="/todoss" render={(props)=> {TodoList(...props)}}/>
+                </div>
+            </Router>
+        </div>
     }
 }
 
-export default TodoList;
+export default withRouter(TodoList);
