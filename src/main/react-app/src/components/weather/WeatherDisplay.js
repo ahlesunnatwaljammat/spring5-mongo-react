@@ -11,14 +11,20 @@ class WeatherDisplay extends Component {
         super(props);
 
         this.state = {
-          users: []
+          mongoUsers: [],
+          jpaUsers: []
         };
 
-        fetch('/api/users')
+        fetch('/api/users/mongo')
             .then(result => result.json())
             .then(json => {
-                console.log(json)
-                this.setState( {users: json} );
+                this.setState( {mongoUsers: json} );
+            });
+
+        fetch('/api/users/jpa')
+            .then(result => result.json())
+            .then(json => {
+                this.setState( {jpaUsers: json} );
             });
     }
 
@@ -27,7 +33,16 @@ class WeatherDisplay extends Component {
         return <div>
             <h3>Hello {this.props.zipcode}</h3>
             <hr/>
-            {this.state.users.map((user,index) => (
+            <h3>Mongo Users</h3>
+            {this.state.mongoUsers.map((user,index) => (
+                <div key={index} style={{margin: '10px'}}>
+                    {user.userId}, {user.username}
+                </div>
+            ))}
+
+            <hr/>
+            <h3>Jpa Users</h3>
+            {this.state.jpaUsers.map((user,index) => (
                 <div key={index} style={{margin: '10px'}}>
                     {user.userId}, {user.username}
                 </div>
